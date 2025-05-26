@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>E-commerce Electrodomésticos</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <span id="userInfo">Cargando usuario...</span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </header>
+
+  {{{body}}}
+
+  <script src="/js/socket-client.js"></script>
+  <script>
+    async function fetchUser() {
+      try {
+        const res = await fetch('/api/sessions/current');
+        const data = await res.json();
+        const u = data.user;
+        document.getElementById('userInfo').innerText = `👤 ${u.name} (${u.email})`;
+      } catch {
+        document.getElementById('userInfo').innerText = 'No logueado';
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch('/auth/logout');
+      location.href = '/login';
+    });
+
+    fetchUser();
+  </script>
+</body>
+</html>

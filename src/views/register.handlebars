@@ -1,0 +1,31 @@
+<h2>Crear cuenta</h2>
+<form id="registerForm">
+  <input name="first_name" placeholder="Nombre" required />
+  <input name="last_name" placeholder="Apellido" required />
+  <input name="age" type="number" placeholder="Edad" required />
+  <input name="email" type="email" placeholder="Email" required />
+  <input name="password" type="password" placeholder="Contraseña" required />
+  <button type="submit">Registrarse</button>
+</form>
+<a href="/login">Ya tengo cuenta</a>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target).entries());
+
+    const res = await fetch('/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      alert('Cuenta creada correctamente');
+      window.location.href = '/login';
+    } else {
+      alert(result.error || 'Error en registro');
+    }
+  });
+</script>
