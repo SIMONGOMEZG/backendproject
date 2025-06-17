@@ -21,7 +21,7 @@ import cartRoutes from './src/routes/carts.routes.js';
 import viewsRoutes from './src/routes/views.routes.js';
 import authRoutes from './src/routes/auth.routes.js';
 import sessionRoutes from './src/routes/sessions.routes.js';
-
+import mocksRouter from './src/routes/mocks.router.js';
 import errorHandler from './src/middleware/errorHandler.js';
 
 dotenv.config();
@@ -30,6 +30,7 @@ const PORT = process.env.PORT || 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+app.use('/api/mocks', mocksRouter);
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
