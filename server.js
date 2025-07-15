@@ -15,7 +15,7 @@ import passport from 'passport';
 
 import './src/auth/passport-jwt.config.js';
 import './src/config/dao.config.js';
-
+import { swaggerUi, specs } from './src/docs/swagger.js';
 import productRoutes from './src/routes/products.routes.js';
 import cartRoutes from './src/routes/carts.routes.js';
 import viewsRoutes from './src/routes/views.routes.js';
@@ -39,6 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'src/public')));
 app.use(passport.initialize());
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.engine('handlebars', exphbs.engine({
   helpers: {
